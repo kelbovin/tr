@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hmmmm?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .question {
+      background-color: red;
+      color: white;
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 24px;
+      padding: 10px;
+      text-align: center;
+      position: relative;
+    }
+
+    .button {
+      padding: 10px 20px;
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 18px;
+      margin: 10px;
+    }
+
+    .button-yes {
+      background-color: green;
+      color: white;
+    }
+
+    .button-no {
+      background-color: red;
+      color: white;
+    }
+
+    .response {
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 18px;
+      margin-top: 10px;
+      color: black;
+      text-align: center;
+    }
+
+    .credits {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      font-size: 10px;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .image {
+      width: 150px;
+      height: auto;
+      margin-top: 20px;
+    }
+
+    .input-name {
+      padding: 10px;
+      font-size: 18px;
+      margin-top: 10px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .reload-button {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      font-size: 10px;
+      font-family: Arial, sans-serif;
+      color: white;
+      background-color: red;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="question" id="question1">
+    <button class="reload-button" onclick="location.reload()">Recarregar</button>
+    <p>Qual é o seu nome, bb?</p>
+    <input id="nameInput" class="input-name" type="text" placeholder="Insira seu nome">
+    <button class="button button-yes" onclick="askSecondQuestion()">Confirmar</button>
+    <div class="credits">by kelgd</div>
+  </div>
+
+  <div class="question" id="question2" style="display: none;">
+    <div id="responseContainer"></div>
+  </div>
+
+  <script>
+    var responseContainer = document.getElementById('responseContainer');
+    var nameInput = document.getElementById('nameInput');
+    var hasResponded = false;
+
+    function askSecondQuestion() {
+      var name = nameInput.value;
+
+      if (name && !hasResponded) {
+        hasResponded = true;
+        document.getElementById('question1').style.display = 'none';
+        document.getElementById('question2').style.display = 'block';
+
+        var secondQuestion = document.createElement('div');
+        secondQuestion.innerHTML = '<p>Vamos transar hoje, ' + name + '? &lt;3</p>';
+        secondQuestion.innerHTML += '<button class="button button-yes" onclick="respond(\'sim\', \'' + name + '\')">Sim</button>';
+        secondQuestion.innerHTML += '<button class="button button-no" onclick="respond(\'não\', \'' + name + '\')">Não</button>';
+        responseContainer.appendChild(secondQuestion);
+      }
+    }
+
+    function respond(answer, name) {
+      var responseText = '';
+      var imageUrl = '';
+
+      if (answer === 'sim') {
+        responseText = 'Obrigado por deixar meu pau feliz e aquecido, ' + name + 'bb!';
+        imageUrl = 'https://uploaddeimagens.com.br/images/004/475/713/original/p%C3%AAnis-emoji-feliz-alegre-da-emo%C3%A7%C3%A3o-do-pau-isolado-85430224-removebg-preview.png?1684708282';
+      } else if (answer === 'não') {
+        responseText = 'Que tristeza do seu bucetão chorando aí, pura maldade da sua flor hein, ' + name + '!';
+        imageUrl = 'https://uploaddeimagens.com.br/images/004/475/714/original/depositphotos_140512260-stock-illustration-penis-surprised-emoji-dick-emotion-removebg-preview.png?1684708315';
+      }
+
+      var response = document.createElement('div');
+      response.innerHTML = '<p class="response">' + responseText + '</p><img class="image" src="' + imageUrl + '" alt="Imagem Resposta">';
+      responseContainer.appendChild(response);
+
+      if (answer === 'sim') {
+        document.getElementsByClassName('button-yes')[0].disabled = true;
+        document.getElementsByClassName('button-no')[0].disabled = true;
+      } else if (answer === 'não') {
+        document.getElementsByClassName('button-yes')[1].disabled = true;
+        document.getElementsByClassName('button-no')[1].disabled = true;
+      }
+    }
+  </script>
+</body>
+</html>
